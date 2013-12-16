@@ -10,7 +10,11 @@ var λ = require('fantasy-check/src/adapters/nodeunit'),
     identity = combinators.identity;
 
 function run(a) {
-    return Identity.of(a.fork(identity));
+    var result;
+    a.fork(function(x) {
+        result = x;
+    });
+    return Identity.of(result);
 }
 
 exports.promise = {

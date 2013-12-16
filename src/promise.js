@@ -1,4 +1,5 @@
-var daggy = require('daggy');
+var daggy = require('daggy'),
+    Option = require('fantasy-options');
 /**
     # Fantasy Promises
 
@@ -37,8 +38,15 @@ Promise.of = function(x) {
 Promise.prototype.ap = function(a) {
     var promise = this;
     return Promise(function(resolve) {
-        return promise.fork(function(f) {
-            return a.map(f).fork(resolve);
+        var f = Option.None,
+            v = Option.None;
+        promise.fork(function(x) {
+            f = Option.Some(x);
+            v.map(x).chain(resolve);
+        });
+        a.fork(function(x) {
+            v = Option.Some(x);
+            f.ap(v).chain(resolve);
         });
     });
 };

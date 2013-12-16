@@ -37,5 +37,5 @@ value.
 ## Fantasy Land Compatible
 
 [
-  ![](https://raw.github.com/pufuwozu/fantasy-land/master/logo.png)
-](https://github.com/pufuwozu/fantasy-land)
+  ![](https://raw.github.com/fantasyland/fantasy-land/master/logo.png)
+](https://github.com/fantasyland/fantasy-land)
