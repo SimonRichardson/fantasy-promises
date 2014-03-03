@@ -20,6 +20,8 @@
     "url": "https://github.com/fantasyland/fantasy-promises/issues"
   },
   "dependencies": {
+    "daggy": "0.0.x",
+    "fantasy-options": "0.x.x"
   },
   "devDependencies": {
     "grunt-cli": "0.1.9",
@@ -28,10 +30,8 @@
     "grunt-contrib-nodeunit": "0.2.0",
     "fantasy-check": "0.1.6",
     "fantasy-helpers": "0.0.x",
-    "daggy": "0.0.x",
     "fantasy-combinators": "0.0.x",
-    "fantasy-identities": "0.x.x",
-    "fantasy-options": "0.x.x"
+    "fantasy-identities": "0.x.x"
   },
   "scripts": {
       "readme": "$(npm bin)/emu < src/promise.js > README.md",
