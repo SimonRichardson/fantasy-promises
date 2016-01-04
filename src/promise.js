@@ -1,3 +1,5 @@
+'use strict';
+
 const daggy = require('daggy');
 const {identity} = require('fantasy-combinators');
 /**

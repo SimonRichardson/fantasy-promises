@@ -1,3 +1,5 @@
+'use strict';
+
 const Promise = require('./src/promise');
 
 if (typeof module != 'undefined')
