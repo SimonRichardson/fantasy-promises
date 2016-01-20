@@ -2,6 +2,7 @@
 
 const daggy = require('daggy');
 const {identity} = require('fantasy-combinators');
+const {of, ap, map, chain, extract, extend} = require('fantasy-land');
 /**
     # Fantasy Promises
 
@@ -25,9 +26,7 @@ const Promise = daggy.tagged('fork');
 
     Creates a Promise that contains a successful value.
 **/
-Promise.of = function(x) {
-    return Promise((resolve) => resolve(x));
-};
+Promise[of] = (x) => Promise((resolve) => resolve(x));
 
 /**
     ### `ap(x)`
@@ -35,9 +34,9 @@ Promise.of = function(x) {
     Returns a new promise that evaluates `f` on a value and passes it
     through to the resolve function.
 **/
-Promise.prototype.ap = function(a) {
+Promise.prototype[ap] = function(a) {
     return Promise((resolve) => {
-        return this.fork((f) => a.map(f).fork(resolve));
+        return this.fork((f) => a[map](f).fork(resolve));
     });
 };
 
@@ -47,7 +46,7 @@ Promise.prototype.ap = function(a) {
     Returns a new promise that evaluates `f` when the current promise
     is successfully fulfilled. `f` must return a new promise.
 **/
-Promise.prototype.chain = function(f) {
+Promise.prototype[chain] = function(f) {
     return Promise((resolve) => {
         return this.fork((a) => f(a).fork(resolve));
     });
@@ -59,7 +58,7 @@ Promise.prototype.chain = function(f) {
     Returns a new promise that evaluates `f` on a value and passes it
     through to the resolve function.
 **/
-Promise.prototype.map = function(f) {
+Promise.prototype[map] = function(f) {
     return Promise((resolve) => {
         return this.fork((a) => resolve(f(a)));
     });
@@ -70,7 +69,7 @@ Promise.prototype.map = function(f) {
 
    Executes a promise to get a value.
 **/
-Promise.prototype.extract = function() {
+Promise.prototype[extract] = function() {
     return this.fork(identity);
 };
 
@@ -80,10 +79,8 @@ Promise.prototype.extract = function() {
    Returns a new promise that evaluates `f` over the promise to get a
    value.
 **/
-Promise.prototype.extend = function(f) {
-    return this.map((a) => f(Promise.of(a)));
+Promise.prototype[extend] = function(f) {
+    return this[map]((a) => f(Promise[of](a)));
 };
 
-// Export
-if (typeof module != 'undefined')
-    module.exports = Promise;
+module.exports = Promise;
